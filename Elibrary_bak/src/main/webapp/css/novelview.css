@@ -1,0 +1,50 @@
+*{
+	margin: 0;
+	padding: 0;
+
+}
+
+.clear {
+	clear: both;
+}
+
+#novelview {
+	width: 60%;
+	min-width: 500px;
+	border: 2px solid silver;
+	margin: 0 auto;
+	margin-top: 1%;
+}
+
+.title {
+	font-size: 30px;
+	margin: 1%;
+}
+
+.udate {
+	float: right;
+	margin-right: 10%;
+}
+
+.allcontent {
+	width: 80%;
+	border-top: solid silver 1px;
+	padding: 3% 1% 2% 1%;
+}
+
+.novelimage img {
+	width: 60%;
+}
+
+.ucontent {
+	margin-top: 5%;
+	padding-bottom: 5%;
+	text-align: left;
+	border-bottom: solid silver 1px;
+	font-size: 20px;
+}
+
+.novel_like {
+	margin-bottom: 3%;
+	font-size: 20px;
+}

@@ -1,0 +1,95 @@
+*{
+	margin: 0;
+	padding: 0;
+
+}
+
+.clear {
+	clear: both;
+}
+
+/*header2 */
+.header2 {
+	width: 100%;
+	height: 180px;
+	float: left;
+}
+
+.header2 img {
+	padding: 40px 0 0 100px;
+	width: 100px;
+	float: left;
+}
+
+.logo_content {
+	padding: 40px 0 0 50px;
+	color:gray;
+	font-size:20px;
+}
+
+.header2 a:link {
+	color: #6667AB;
+	text-decoration: none;
+	font-size: 50px;
+}
+.header2 a:visited {
+	color: #6667AB;
+	font-size: 50px;
+}
+.header2 a:hover {
+	color: #6667AB;
+	font-size: 50px;
+}
+.header2 a:active {
+	color: #6667AB;
+	font-size: 50px;
+}
+
+.title_1 {
+	padding-bottom: 5px;
+	border-bottom: 3px solid navy;
+	color: navy;
+	width:  90%;
+	margin: auto;
+	font-size: 30px;
+}
+
+#wrap {
+	width: 971px; /* 1024*768로 해상도를 맞추어서 설계 */
+	/* 가운데 정렬을 위한 바깥쪽 여백 설정 */
+	margin: 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#wrap h1 {
+	color: green; /* 글 색상 */
+}
+
+#wrap table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 20px; /* 글꼴 크기 */
+	line-height: 30px; /* 줄 간격 */
+	color: #555;
+}
+
+#wrap table td,th {
+	border: #d3d3d3 solid 1px; /* 경계선 색상 스타일 굵기 */
+	padding: 5px; /* 안쪽 여백 */
+}
+
+#wrap th {
+	background: #6667AB; /* 배경색 */
+	color: white;
+}
+
+#wrap a {
+	text-decoration: none; /* 링크 밑줄 없애기 */
+	color: black; /* 글 색상 */
+}
+
+#wrap a:HOVER {
+	text-decoration: underline; /* 밑줄 */
+	color: #6667AB; /* 글 색상 */
+}

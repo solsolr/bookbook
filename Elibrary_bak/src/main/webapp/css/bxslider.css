@@ -1,0 +1,47 @@
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		.sec3_list ul { 
+		width: 222px;
+	    list-style:none;
+	    margin:0;
+	    padding:0;
+		}
+
+		li {
+	    margin: 0 0 0 0;
+	    padding: 0 0 0 0;
+	    border : 0;
+	    /*float: left;
+	    display: inline-block;*/
+		}
+
+
+		/* bxslider custom */
+		#banner{padding-top:100px; /*width: 100%; overflow: hidden;*/}
+		.banner_inner{/*width:80%;*/width: 1440px; margin:0 auto; overflow: hidden;}
+		.banner_inner h1{font-size:38.4px; color: #6667AB; line-height:1; }
+		#banner_list{position:relative; height:370px;  margin-top:50px; /*width: 80%;*/ }
+		/*#banner_list:before{content:""; position:absolute; top:0;  left:-100%; width:100%; height:100%; background:rgba(255,255,255,0.5); z-index:1;}
+		#banner_list:after{content:""; position:absolute; top:0; right:-100%; width:100%; height:100%; background:rgba(255,255,255,0.5); z-index:2;}*/
+		/*.bx-wrapper{margin:  auto;}*/    
+		#banner .bx-viewport{width:100%; overflow: visible !important;}
+		
+		    
+		.sec3_list li{transition:0.5s all;}
+		.sec3_list li span{display:block; position:relative; height:200px; border-radius:15px; overflow:hidden;  }
+		.sec3_list li span img{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); max-width:100%; max-height:100%; background-color:cadetblue; box-shadow:8px 8px 5px grey;}
+		.sec3_list li dl{height:170px; padding:25px;  background:#fff; transition:0.5s all;}
+		.sec3_list li dl dt{font-size:20px; color:#444; line-height:1; font-weight:bold; }
+		.sec3_list li dl dt:after{content:""; display:block; width:20px; height:2px; background:red; margin-top:10px;}
+		.sec3_list li dl dd{font-size:14px; color:#444; margin-top:10px;}
+		    
+		.sec3_list li:hover{transform:translateY(-20px);}
+		.sec3_list li:hover dl{box-shadow:5px 5px 10px rgba(0,0,0,.15);}
+		    
+
+		    
+		a.bx-prev{position:absolute; left:-70px; top:50%; transform:translateY(-50%); width:50px; height:50px; background:url(슬라이드 이전버튼 이미지 주소) no-repeat; z-index:100;}
+		a.bx-next{position:absolute; right:-70px; top:50%; transform:translateY(-50%); width:50px; height:50px; background:url(슬라이드 다음버튼 이미지 주소) no-repeat; z-index:100;}

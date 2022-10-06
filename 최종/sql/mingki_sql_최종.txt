@@ -1,0 +1,131 @@
+-- 공지사항 테이블
+drop table notice CASCADE CONSTRAINTS;
+CREATE TABLE notice
+(
+num         NUMBER(5) NOT NULL,         -- 공지사항 번호(PK)
+pass        VARCHAR2(30) NOT NULL,      -- 비밀번호
+nname        VARCHAR2(30) NOT NULL,     -- 글쓴이 닉네임(FK)
+title       VARCHAR2(50) NOT NULL,      -- 제목
+content     VARCHAR2(4000) NOT NULL,    -- 내용
+readcount   NUMBER(4) DEFAULT 0,        -- 조회수
+writedate   DATE DEFAULT sysdate,       -- 날짜
+primary key(num),
+CONSTRAINT notice_nname_fk FOREIGN KEY (nname) REFERENCES member(nname)
+);
+
+ 
+DROP SEQUENCE notice_no_seq;
+CREATE SEQUENCE notice_no_seq INCREMENT BY 1 START WITH 1;    -- nno: notice 테이블 시퀀스
+
+-- 자유연재 테이블
+drop table userbook CASCADE CONSTRAINTS;
+CREATE TABLE userbook
+(
+	uno                  NUMBER(10) NOT NULL ,              -- 자유연재 번호(PK)
+	nname                VARCHAR2(25) NOT NULL ,            -- 닉네임(FK)[user]
+    utitle               VARCHAR2(100) NOT NULL ,           -- 자유연재 제목
+    usubtitle            VARCHAR2(100) NULL ,                -- 자유연재 서브제목
+	ucontent             CLOB NOT NULL ,                    -- 자유연재 내용
+	udate                DATE NOT NULL ,                    -- 등록일
+	uhits                NUMBER(10) default 0 NOT NULL ,    -- 조회수
+	urecom               NUMBER(10) default 0 NOT NULL ,    -- 추천수
+	uimage               VARCHAR2(200) NOT NULL ,            -- 이미지
+	uscale               INTEGER NOT NULL check(uscale in (1, 0)),                 -- 장편/단편(장편:1,단편:0)
+    primary key(uno),
+    CONSTRAINT userbook_nname_fk FOREIGN KEY (nname) REFERENCES member(nname)    -- 부모 컬럼이 사라져도 삭제 x
+);
+
+DROP SEQUENCE userbook_no_seq;
+CREATE SEQUENCE userbook_no_seq INCREMENT BY 1 START WITH 1;    -- uno: userbook 테이블 시퀀스
+
+-- 자유연재 추천 테이블
+drop table userrecom CASCADE CONSTRAINTS;
+CREATE TABLE userrecom
+(
+	rno                  NUMBER NOT NULL ,                      -- 추천번호(PK)
+	uno                  NUMBER NOT NULL ,                      -- 자유연재 번호(FK)
+    userid               VARCHAR2(25) NOT NULL ,                -- 사용자 아이디(FK)
+	rrecom               VARCHAR2(3) NOT NULL CHECK(rrecom in ('N', 'Y')),     -- 추천 여부(o:Y, x:N)
+    primary key(rno),
+    CONSTRAINT userecom_uno_fk FOREIGN KEY (uno) REFERENCES userbook(uno) ON DELETE CASCADE,        -- 부모 컬럼이 사라지면 같이 삭제
+    CONSTRAINT userecom_userid_fk FOREIGN KEY (userid) REFERENCES member(userid) ON DELETE CASCADE    -- 부모 컬럼이 사라지면 같이 삭제
+);
+
+DROP SEQUENCE userrecom_no_seq;
+CREATE SEQUENCE userrecom_no_seq INCREMENT BY 1 START WITH 1;    -- rno: userecom 테이블 시퀀스
+
+--멤버 테이블
+drop table member CASCADE CONSTRAINTS;
+CREATE TABLE member
+(
+	userid               VARCHAR2(25) NOT NULL,         -- 사용자 아이디(PK)
+	pw                   VARCHAR2(50) NOT NULL ,        -- 사용자 비밀번호
+	admin                INTEGER default 0 NOT NULL CHECK(admin in (0, 1)),    -- 권한(user:0, admin:1)
+	nname                VARCHAR2(20) unique NOT NULL,  -- 닉네임
+	payment              INTEGER default 0 NOT NULL CHECK(payment in (0, 1, 2)),    -- 결제정보(x:0, 3권:1, 5권:2) 
+    question             number(3) NOT NULL check(question in (1, 2, 3, 4, 5)),           -- 질문 번호
+    answer               VARCHAR2(50) NOT NULL ,         -- 질문의 정답
+    primary key(userid)
+);
+
+--트리거 생성
+create or replace trigger trigger1
+				after update on member
+				for each row
+				begin
+				update userbook
+				set nname=:new.nname
+				where nname=:old.nname;
+				end;
+				/
+commit;
+
+--리뷰테이블
+drop table bcomment CASCADE CONSTRAINTS;
+CREATE TABLE bcomment
+(
+	cno                  NUMBER(10) NOT NULL ,      -- 리뷰 테이블(PK)
+    bno                  NUMBER(10) NOT NULL ,      -- 도서번호(FK)[book]
+    userid               VARCHAR2(25) NOT NULL,     -- 사용자 아이디(FK)[user]
+	cstar                NUMBER(3) NOT NULL ,       -- 별점
+	ccontent             VARCHAR2(1000) NULL ,      -- 리뷰 내용
+    primary key(cno),
+    CONSTRAINT bcomment_bno_fk FOREIGN KEY (bno) REFERENCES book(bno) ON DELETE CASCADE,            -- 부모 컬럼이 사라지면 같이 삭제
+    CONSTRAINT bcomment_userid_fk FOREIGN KEY (userid) REFERENCES member(userid) ON DELETE CASCADE    -- 부모 컬럼이 사라지면 같이 삭제
+);
+
+DROP SEQUENCE bcomment_no_seq;
+CREATE SEQUENCE bcomment_no_seq INCREMENT BY 1 START WITH 1;    -- cno: bcomment 테이블 시퀀스
+
+--book테이블
+drop table book CASCADE CONSTRAINTS;
+
+CREATE TABLE book
+(
+	bno                  NUMBER(10) NOT NULL ,      -- 도서 번호(PK)
+	btitle               VARCHAR2(100) NOT NULL ,   -- 제목
+	bcontent             CLOB NOT NULL ,            -- 내용
+	bgenre               VARCHAR2(30) NOT NULL ,    -- 장르
+	bdate                DATE NOT NULL ,            -- 출판일
+	bpublisher           VARCHAR2(50) NOT NULL ,    -- 출판사
+    bauthor              VARCHAR2(50) NOT NULL ,    -- 작가
+	bintro               VARCHAR2(4000) NOT NULL ,  -- 도서 소개
+	breview              VARCHAR2(4000) NOT NULL ,  -- 서평
+	bimage               VARCHAR2(1000) NOT NULL,     -- 이미지
+    primary key(bno)
+);
+commit;
+
+DROP SEQUENCE book_no_seq;
+CREATE SEQUENCE book_no_seq INCREMENT BY 1 START WITH 1;    -- bno: book 테이블 시퀀스
+
+-- 내 서재 테이블
+drop table library CASCADE CONSTRAINTS;
+CREATE TABLE library
+(
+	userid               VARCHAR2(25) NOT NULL,     -- 사용자 아이디(PK,FK)[user]
+	bno                  NUMBER(10) NOT NULL,       -- 도서번호(PK,FK)[book]
+    primary key(userid, bno),
+    CONSTRAINT library_userid_fk FOREIGN KEY (userid) REFERENCES member(userid) ON DELETE CASCADE,    -- 부모 컬럼이 사라지면 같이 삭제
+    CONSTRAINT library_bno_fk FOREIGN KEY (bno) REFERENCES book(bno) ON DELETE CASCADE              -- 부모 컬럼이 사라지면 같이 삭제
+);

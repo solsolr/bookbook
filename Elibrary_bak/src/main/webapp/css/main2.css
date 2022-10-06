@@ -1,0 +1,104 @@
+*{
+    padding: 0; margin: 0; border: 0;
+}
+.wrap{
+    width: 1440px; margin: 0 auto;
+    color: #6667AB;
+}
+
+a{
+    text-decoration: none;
+}
+
+.box2{
+    font-size: 120%;
+    padding-top: 20px;
+    width: 100%; height: 250px;
+}
+.box3{
+    font-size: 120%;
+    padding-top: 40px;
+
+    width: 100%; height: 1500px; 
+}
+
+
+.box2 > .book_rank_form{
+    
+    width: 100%; height: 200px; 
+    text-align: center;
+}
+.box2 > .book_rank_form >.book_rank_text{
+    font-size: 1000%;
+    width: 8%;
+    display:inline-block;
+    color: whitesmoke;
+    text-shadow: 8px 12px 12px gray;
+    -webkit-text-stroke: 6px #6667AB;
+    text-align: center;
+    line-height: 50px;
+
+}
+.box2 > .book_rank_form >.book_rank_image{
+    width: 10%; height: 200px; background-color: #555;
+    box-shadow: 8px 8px 5px gray;
+    position:relative; top:20px; left: 0px;
+    display:inline-block;
+    color: black;
+}
+.book_grid_form{
+
+    padding-top: 20px;
+    text-align: center;
+    display: grid;
+    width: 100%;
+    grid-template-rows: 300px 300px;
+    grid-template-columns: repeat(3,1fr)
+    
+}
+#book_item_image{
+
+    box-shadow: 8px 8px 5px gray;
+    
+}
+
+
+.book_item_txt{
+	font-size: 90%;
+    left: 50px;
+    width: 50%;
+    height: 100%;
+    background-color: #333;
+}
+.book_item_form{
+    display: flex;
+   
+
+}
+#book_title{
+    width: 70%;
+    font-size: 100%;
+    text-align : left;
+    padding-bottom: 0px;
+    padding-top: 50px;
+    padding-left: 25px;
+}
+@media (max-width: 1440px){
+    .wrap{width: 100%; }
+}
+@media (max-width: 768px){
+    .wrap{width: 100%; }
+    .box2 > .book_rank_form >.book_rank_text{display :none;}
+    .box2 > .book_rank_form >.book_rank_image{width :20%;  }
+    .book_grid_form{grid-template-columns: repeat(2,1fr)}
+    .book_grid_form{grid-auto-rows: 150px;}
+    .box3{height: 500px;}
+}
+@media (max-width: 480px){
+    .box2 > .book_rank_form >.book_rank_text{display :none;}
+    .box2 > .book_rank_form >.book_rank_image{width :23%;  }
+    .book_grid_form{grid-template-columns: 1fr}
+    .book_grid_form{grid-auto-rows: 150px;}
+    .box3{height: 950px;}
+}
+
